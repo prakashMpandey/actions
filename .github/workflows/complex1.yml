@@ -1,0 +1,24 @@
+on:
+  push:
+    branches: [main,master]
+  
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    
+    paths:
+      - "./filters/*.md"  ## include
+      - "!./filters/*.txt"  ## exclude
+    
+
+  workflow_dispatch:
+
+
+jobs:
+  job-1:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "=== $GITHUB_EVENT_NAME payload ==="
+             cat "$GITHUB_EVENT_PATH"
