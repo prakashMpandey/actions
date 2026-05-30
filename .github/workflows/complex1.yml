@@ -9,8 +9,8 @@ on:
       - reopened
     
     paths:
-      - "./filters/*.md"  ## include
-      - "!./filters/*.txt"  ## exclude
+      - "filters/*.md"  ## include
+      - "!filters/*.txt"  ## exclude
     
 
   workflow_dispatch:
