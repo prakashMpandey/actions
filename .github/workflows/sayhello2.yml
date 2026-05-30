@@ -1,0 +1,25 @@
+name: say hello 2.0
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  say-hello-inline-bash:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: step 1
+        run: echo "hello from the bash script"
+  
+  say-hello-inline-python:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: print("hello world from python")
+        shell: python
+  
+  say-hello-action:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/hello-world-javascript-action
+        with:
+          who-to-greet: "from an action in github"
