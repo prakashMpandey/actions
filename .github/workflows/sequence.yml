@@ -28,8 +28,13 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
         - job-2
-        - job-3
+        - job-5
     steps:
       - run: echo "it is fourth job"
       - run: echo "and it is the last one"
-      
+  job-5:
+    runs-on: ubuntu-24.04
+    needs:
+      - job-1
+    steps:
+      - run: echo "it is fifth job"
