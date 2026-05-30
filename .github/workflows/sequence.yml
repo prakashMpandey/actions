@@ -1,0 +1,35 @@
+name: sequential workflow
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  job-1:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "first job is first"
+      - run: echo "kamehameha"
+    
+  
+  job-2:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "second is second"
+    
+  job-3:
+    runs-on: ubuntu-24.04
+    needs:
+      - job-1
+      - job-2
+    steps:
+      - run: echo "it is third job"
+
+  job-4:
+    runs-on: ubuntu-24.04
+    needs:
+        - job-2
+        - job-3
+    steps:
+      - run: echo "it is fourth job"
+      - run: echo "and it is the last one"
+      
