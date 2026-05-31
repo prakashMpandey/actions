@@ -1,0 +1,51 @@
+name: permissions
+on:
+  workflow_dispatch:
+
+jobs:
+  read-only-pr:
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: read
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install github cli
+        run: sudo apt-get update -qq && sudo apt-get install -y gh
+      
+      - name: list the first 5 open prs
+        run: gh pr list --limit 5
+        env:
+          GH_TOKEN: ${{github.token}}
+      
+      - name: attempt to add a label (Expected to fail)
+        env:
+          GH_TOKEN: ${{github.token}}
+        run: |
+          gh pr edit 1 --add-label "documentation"
+
+      - name: confirm the failure
+        if: failure()
+        run: echo " write operation was blocked , token is read only"
+  
+  read-write-pr:
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: install github cli
+        run: sudo apt-get update -qq && sudo apt-get install -y gh
+      
+      - name: attempt to add a label 
+        env:
+          GH_TOKEN: ${{github.token}}
+        run: |
+          gh pr edit 1 --add-label "documentation"
+        
+      - name: confirm the
+        if: success()
+        run: echo "write operation succeeded"
+        
