@@ -20,7 +20,6 @@ jobs:
   desktop:
     runs-on: ubuntu-24.04
     needs:
-     - printer
      - plotter
     steps:
      - run: echo "hello i am a desktop"
