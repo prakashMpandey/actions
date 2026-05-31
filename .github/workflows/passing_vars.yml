@@ -1,0 +1,30 @@
+name: passing variables between jobs
+on:
+  workflow_dispatch: # Iska matlab aap isko manually click karke chala sakte ho
+
+jobs:
+  # 1. PRODUCER JOB: Yeh data banayegi aur bahar bhejegi
+  producer:
+    runs-on: ubuntu-24.04
+    outputs:
+      job_ki_output: ${{ steps.step_id.outputs.step_output }}
+
+    steps:
+      - name: Data banao aur export karo
+        id: step_id  # Is step ka ek naam rakh diya
+        run: |
+          # Ek variable banaya 'bar' value ke sath
+          DATA="GitHub is awesome" 
+          
+          # Isko GitHub ke special output pipe mein daal diya taaki bahar wale dekh sakein  
+          echo "step_output=${DATA}" >> "$GITHUB_OUTPUT" 
+
+  # 2. CONSUMER JOB: Yeh producer ke khatam hone ka wait karegi aur uska data use karegi
+  consumer:
+    runs-on: ubuntu-24.04
+    needs: producer # Yeh zaroori hai, iske bina data nahi milega
+    
+    steps:
+      - name: Producer ka bheja hua data print karo
+        run: |
+          echo "Producer se mila hua data: ${{ needs.producer.outputs.job_ki_output }}"
