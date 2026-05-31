@@ -1,0 +1,26 @@
+name: "custom"
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  printer:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "hello world"
+  
+  plotter:
+    runs-on: ubuntu-24.04
+    needs:
+     - printer
+    steps:
+      - run: echo "hello i am a plotter"
+  
+  desktop:
+    runs-on: ubuntu-24.04
+    needs:
+     - printer
+     - plotter
+    steps:
+     - run: echo "hello i am a desktop"
