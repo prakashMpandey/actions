@@ -1,0 +1,21 @@
+name: different runner types
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  ubuntu-runner:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "i am on ubuntu"
+    
+  
+  windows-runner:
+    runs-on: windows-2022
+    steps:
+      - run: echo "i am on windows"
+  
+  mac-runner:
+    runs-on: macos-14
+    steps:
+      - run: echo "i am on mac"
