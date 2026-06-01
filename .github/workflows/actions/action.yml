@@ -1,0 +1,28 @@
+name: "hello world"
+description: "greet someone"
+
+inputs:
+  greet:
+    description: "who to greet"
+    required: true
+    default: "world"
+
+outputs:
+  random-number:
+    description: "random number"
+    value: ${{steps.random-number-generator.outputs.random-number}}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set greeting
+      run: echo "hello $INPUT_WHO_TO_GREET"
+      shell: bash
+      env:
+        $INPUT_WHO_TO_GREET: ${{inputs.greet}}
+    
+    - name: random number generator
+      id: random-number-generator
+      run: echo "random-number=${echo $RANDOM}" >> $GITHUB_OUTPUT
+      shell: bash
+      
